@@ -5,12 +5,12 @@ The software runs with a single camera that uses image differentiation to identi
 when an RC car starts/finishes a lap.
 
 
-##Instalation and Deploy
+## Instalation and Deploy
 
-####Requirements
+#### Requirements
 Install the Requirements.txt file.
 
-####Configuration
+#### Configuration
 You need to configure some information on the Web/LapTracker/lapTracker.py file:
 
 | Parameters | Description |
@@ -21,7 +21,7 @@ You need to configure some information on the Web/LapTracker/lapTracker.py file:
 | finalImageSize  | Size of the telemetry image (pixels)  |
 | videoDevice  | ID of the camera used by the system  |
 
-####Running
+#### Running
 
 Make sure you have a camera connected to the machine, and update the configurations above.
 Run the webserver:
@@ -37,13 +37,13 @@ Go to your browser and open the following link: http://127.0.0.1:8000/Web
 Fill in the Car Name and the Track Distance and start the session.
 
 
-####Collected Data
+#### Collected Data
 
 The system collects data about the lap time and the average velocity. All the collected data is saved inside the /static/sessions folder as a .csv file. 
 
 ![Telemetry](gitImages/telemetry.png)
 
 
-##Contact
+## Contact
 
 Any problems or doubts, please contact me: pablovin@gmail.com
