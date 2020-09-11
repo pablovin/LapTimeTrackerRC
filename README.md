@@ -31,11 +31,11 @@ You need to configure some information on the Web/LapTracker/lapTracker.py file:
 
 | Parameters | Description |
 | ------------- | ------------- |
-| cameraFPS  | FPS of the camera  |
+|raspberryCamera | If you are using the RaspberryPi camera |
 | minimumLapTime  | Minimum lap time in seconds |
 | initialConfigTime  | Minimum time for initial calibration in seconds  |
 | finalImageSize  | Size of the telemetry image (pixels)  |
-| videoDevice  | ID of the camera used by the system  |
+| videoDevice  | ID of the camera used by the system if using a usb/integrated camera  |
 
 #### Running
 
