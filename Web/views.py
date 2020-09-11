@@ -2,32 +2,80 @@ from django.shortcuts import render
 from django.http import HttpResponse
 
 from django.conf import settings
+from django.shortcuts import redirect
 
 import threading
 import ctypes
 import time
 from Web.LapTracker.lapTracker import LapTracker
 
+from Web.models import Track, Car
 # Create your views here.
 
+def loadCarsAndTracks():
+
+    tracks = []
+    for t in Track.objects.all():
+        tracks.append(t.name)
+
+    cars = []
+    for t in Car.objects.all():
+        cars.append(t.name)
+
+    return tracks, cars
 
 def index(request):
-    return render(request, 'Web/index.html')
+
+    tracks,cars = loadCarsAndTracks()
+
+    context = {'tracks': tracks, "cars": cars}
+
+    return render(request, 'Web/index.html', context)
+
+
+def addCar(request):
+    carName = request.POST.get('newCarNameID', False);
+
+    newCar = Car(name=carName)
+    newCar.save()
+
+    tracks, cars = loadCarsAndTracks()
+
+    context = {'tracks': tracks, "cars": cars}
+
+    return render(request, 'Web/index.html', context)
+
+def addTrack(request):
+    trackName = request.POST.get('newTrackNameID', False);
+    trackLength = request.POST.get('newTrackLenghtID', False);
+
+    newTrack = Track(name=trackName, length=trackLength)
+    newTrack.save()
+
+    tracks, cars = loadCarsAndTracks()
+
+    context = {'tracks': tracks, "cars": cars}
+
+    return render(request, 'Web/index.html', context)
+
 
 def startSession(request):
 
     settings.STOP_THREAD = False
+    carName = request.POST['selectedCarID']
+    trackName = request.POST['selectedTrackNameID']
 
-    carName = request.POST.get('carName', False);
-    trackDistance = request.POST.get('trackDistance', False);
 
-    threadCamera = LapTracker(carName=carName,trackDistance=trackDistance)
+    car = Car.objects.get(name=carName)
+    track = Track.objects.get(name=trackName)
+
+    threadCamera = LapTracker(car=car,track=track)
     threadCamera.start()
 
-    context = {'carName': carName, "trackDistance": trackDistance}
+    context = {'carName': car.name, "trackDistance": track.lenght}
 
     # Update session
-    session = {'carName': carName, "trackDistance": trackDistance}
+    session = {'carName': car.name, "trackDistance": track.lenght}
 
     request.session['LTRCWeb'] = session
 
@@ -46,6 +94,9 @@ def stopSession(request):
 
     settings.STOP_THREAD = True
 
-
     context = {'carName': ""}
     return render(request, 'Web/index.html', context)
+
+
+def cameraConfig():
+    return None

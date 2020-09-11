@@ -10,6 +10,22 @@ when an RC car starts/finishes a lap.
 #### Requirements
 Install the Requirements.txt file.
 
+### Migration
+
+After instalation, run the migration to guarantee all the models are created properly:
+
+```python
+python manage.py migrate
+```
+
+###Admin
+
+To create an admin to manage all the data run:
+
+```python
+python manage.py createsuperuser
+```
+
 #### Configuration
 You need to configure some information on the Web/LapTracker/lapTracker.py file:
 

@@ -172,25 +172,25 @@ input[type=text] {
 </head>
 <body>
 
-    <form action="{% url 'Web:stopSession'%}" method="post">
-{% csrf_token %}
-    <div class="inner-wrap">
-        <input type="submit" value="Stop Session">
-    </div>
-</form>
 
-<div class="top">
-    <h1><b>Lap Tracker RC - Web. v0.1beta</b> </h1><br>
-
-</div>
+<!--<div class="top">-->
+<!--    <h1><b>Lap Tracker RC - Web. v0.1beta</b> </h1><br>-->
+<!--</div>-->
 
 
 <div class="center">
     <div class="form-style-10">
 <h1>Current Telemetry!</h1>
+        <form action="{% url 'Web:stopSession'%}" method="post">
+{% csrf_token %}
+    <div class="inner-wrap">
+        <input type="submit" value="Stop Session">
+    </div>
+</form>
     <div class="inner-wrap">
        <img src="/static/sessions/currentPlot.png" alt="Plot!">
     </div>
+
 
 <form action="{% url 'Web:updateSession'%}" name="updateSessionForm" method="post">
     {% csrf_token %}
@@ -201,7 +201,6 @@ input[type=text] {
 
     function updatePage() {
         setInterval(function() {document.updateSessionForm.submit();}, 1000);
-
     }
       updatePage()
 </script>

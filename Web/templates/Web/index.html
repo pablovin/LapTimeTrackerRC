@@ -9,6 +9,14 @@
   background-color: #cccccc;
 }
 
+#newCarDiv{
+display: none;
+}
+
+#newTrackDiv{
+display: none;
+}
+
 .top {
 position: fixed;
   top: 1%;
@@ -163,28 +171,101 @@ input[type=text] {
 
 
 
+
 </style>
 </head>
 <body>
+
+<script>
+function openNewCarDiv() {
+  var selectList = document.getElementById("selectItem");
+  var newCar = document.getElementById("newCarDiv");
+
+  if (selectList.style.display === "none") {
+    selectList.style.display = "block";
+    newCar.style.display = "none";
+  } else {
+    selectList.style.display = "none";
+    newCar.style.display = "block";
+
+  }
+}
+
+function openNewTrackDiv() {
+  var selectList = document.getElementById("selectItem");
+  var newTrack = document.getElementById("newTrackDiv");
+
+  if (selectList.style.display === "none") {
+    selectList.style.display = "block";
+    newTrack.style.display = "none";
+  } else {
+    selectList.style.display = "none";
+    newTrack.style.display = "block";
+
+  }
+}
+</script>
 
 <div class="top">
     <h1><b>Lap Tracker RC - Web. v0.1beta</b> </h1><br>
 </div>
 
-
 <div class="center">
 
-    <div class="form-style-10">
+<div class="form-style-10">
 <h1>New Session<span>Enter the car name and start a new session!</span></h1>
-<form action="{% url 'Web:startSession'%}" method="post">
-{% csrf_token %}
+
+<div id="selectItem">
+    <form action="{% url 'Web:startSession'%}" method="post">
+        {% csrf_token %}
+        <div class="inner-wrap">
+
+                 <label>Car: <select name="selectedCarID" id ="selectedCarID">
+                {% for entry in cars %}
+                    <option value="{{ entry}}">{{ entry }}</option>
+                {% endfor %}
+                </select> <input type="button" onclick="openNewCarDiv()" value="+"></label>
+
+                <label>Track: <select name="selectedTrackNameID" id ="selectedTrackNameID">
+                {% for entry in tracks %}
+                    <option value="{{ entry }}">{{ entry }}</option>
+                {% endfor %}
+                </select> <input type="button" onclick="openNewTrackDiv()" value="+"></label>
+                <input type="submit" id="submitButton" value="Start Session">
+
+        </div>
+
+    </form>
+</div>
+
+<div id="newCarDiv">
+    <form action="{% url 'Web:addCar'%}" method="post">
+        {% csrf_token %}
+        <div class="inner-wrap">
+             <input type="button" onclick="openNewCarDiv()" value="Back"> <br>
+             <label>Car Name: <input type="text" name="newCarNameID"  id ="newCarNameID" /></label>
+                <input type="submit" value="Add new car">
+
+        </div>
+
+    </form>
+</div>
+
+<div id="newTrackDiv">
+<form action="{% url 'Web:addTrack'%}" method="post">
+    {% csrf_token %}
     <div class="inner-wrap">
-        <label>Car Name: <input type="text" name="carName"  id ="carNameID" /></label>
-        <label>Track Distance: <input type="text" name="trackDistance"  id ="trackDistanceID" /></label>
-        <input type="submit" value="Start Session">
+
+         <input type="button" onclick="openNewTrackDiv()" value="Back"> <br>
+         <label>Track Name: <input type="text" name="newTrackNameID"  id ="newTrackNameID" /></label>
+         <label>Track Lenght (m): <input type="text" name="newTrackLenghtID"  id ="newTrackLenghtID" /></label>
+            <input type="submit" value="Add new Track">
+
     </div>
 
 </form>
+</div>
+
 </div>
 
 </div>
