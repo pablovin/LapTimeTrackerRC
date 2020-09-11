@@ -1,6 +1,10 @@
 from django.conf import settings
 import cv2
+import matplotlib
+matplotlib.use('Agg')
+
 import matplotlib.pyplot as plt
+from matplotlib.figure import Figure
 import numpy
 
 from skimage.metrics import structural_similarity
@@ -38,7 +42,7 @@ class LapTracker(threading.Thread):
     def __init__(self, car=None, track=None):
 
 
-        self.circuitDistance = float(track.lenght)
+        self.circuitDistance = float(track.length)
 
         # Start the camera
         self.initialCameraSettings()
@@ -49,7 +53,9 @@ class LapTracker(threading.Thread):
 
         #Saving functions
         if not os.path.exists(settings.BASE_DIR + settings.STATIC_URL + "sessions/"):
-            os.mkdir(settings.BASE_DIR + settings.STATIC_URL + "sessions/")
+            os.mkdir(settings.BASE_DIR + settings.STATIC_URL )
+            os.mkdir(settings.BASE_DIR + settings.STATIC_URL  + "sessions/")
+           
 
         self.saveCSV = settings.BASE_DIR + settings.STATIC_URL + "sessions/"+str(car.name)+"_" + str(datetime.datetime.now()) + ".csv"
 
@@ -242,8 +248,14 @@ class LapTracker(threading.Thread):
 
         plotRange = range(len(plotLapTime))
 
-        plt.clf()
-        fig, axs = plt.subplots(2, 1)
+        fig = Figure()
+        axs = fig.subplots(2,1)
+        #ax.plot([1, 2])
+        # Save it to a temporary buffer.
+        
+       
+        "plt.clf()"
+        #fig, axs = plt.subplots(2, 1)
         rect1 = axs[0].plot(plotRange, plotLapTime)
         axs[0].set_title('Lap Time (s)')
 
@@ -271,10 +283,14 @@ class LapTracker(threading.Thread):
 
         axs[1].set_title('Speed (Km/h)')
 
-        fig.set_size_inches(10.0, 5)
+        # fig.set_size_inches(10.0, 5)
         fig.tight_layout(pad=1.0)
 
-        plt.savefig(self.saveImg + "/currentPlot.png")
+        #buf = BytesIO()
+       # fig.savefig(buf, format="png")
+       
+        
+        fig.savefig(self.saveImg + "/currentPlot.png")
 
     def get_id(self):
 

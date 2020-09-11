@@ -72,10 +72,10 @@ def startSession(request):
     threadCamera = LapTracker(car=car,track=track)
     threadCamera.start()
 
-    context = {'carName': car.name, "trackDistance": track.lenght}
+    context = {'carName': car.name, "trackDistance": track.length}
 
     # Update session
-    session = {'carName': car.name, "trackDistance": track.lenght}
+    session = {'carName': car.name, "trackDistance": track.length}
 
     request.session['LTRCWeb'] = session
 

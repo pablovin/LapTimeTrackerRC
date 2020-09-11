@@ -3,7 +3,7 @@ from django.db import models
 class Track(models.Model):
 
     name = models.CharField(max_length=200)
-    lenght = models.IntegerField(default=0)
+    length = models.IntegerField(default=0)
 
 class Car(models.Model):
     name = models.CharField(max_length=200, default="Car")

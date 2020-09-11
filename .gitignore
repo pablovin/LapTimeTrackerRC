@@ -1,1 +1,2 @@
 /static/sessions/
+*.sqlite3
